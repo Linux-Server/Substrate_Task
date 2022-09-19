@@ -25,6 +25,14 @@ without launching it:
 cargo build --release
 ```
 
+### Test
+
+The below command will execute all the test cases defined in /pallets/pallet_club?src/test.rs file
+
+```sh
+cargo test -p pallet_club
+```
+
 ## Run
 
 The provided `cargo run` command will launch a temporary node and its state will be discarded after
@@ -32,12 +40,6 @@ you terminate the process. After the project has been built, there are other way
 node.
 
 ### Single-Node Development Chain
-
-This command will start the single-node development chain with non-persistent state:
-
-```bash
-./target/release/node-template --dev
-```
 
 > Development chain means that the state of our chain will be in a tmp folder while the nodes are
 > running. Also, **alice** account will be authority and sudo account as declared in the
@@ -49,9 +51,29 @@ This command will start the single-node development chain with non-persistent st
 > - Alice//stash
 > - Bob//stash
 
+This command will start the single-node development chain with non-persistent state:
+
+```bash
+./target/release/node-template --dev
+```
+
+> Above code will run the blockchain node in local machine port : 9944
+
+```
+ws://127.0.0.1:9944
+
+```
+
 ### Connect with Polkadot-JS Apps Front-end
 
 Once the node template is running locally, you can connect it with **Polkadot-JS Apps** front-end
 to interact with your chain. [Click
 here](https://polkadot.js.org/apps/#/explorer?rpc=ws://localhost:9944) connecting the Apps to your
 local node template.
+
+### Youtube video of overall flow
+
+```
+https://www.youtube.com/watch?v=nyW_nlNI_ZQ
+
+```
