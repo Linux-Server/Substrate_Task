@@ -44,7 +44,7 @@ This command will start the single-node development chain with non-persistent st
 > [genesis state](https://github.com/substrate-developer-hub/substrate-node-template/blob/main/node/src/chain_spec.rs#L49).
 > At the same time the following accounts will be pre-funded:
 >
-> - Alice (Sudoor Root Origin by default)
+> - Alice (Sudo or Root Origin by default)
 > - Bob
 > - Alice//stash
 > - Bob//stash

@@ -1,4 +1,4 @@
-use crate as pallet_template;
+use crate as pallet_club;
 use frame_support::traits::{ConstU16, ConstU64};
 use frame_system as system;
 use sp_core::H256;
@@ -17,10 +17,11 @@ frame_support::construct_runtime!(
 		NodeBlock = Block,
 		UncheckedExtrinsic = UncheckedExtrinsic,
 	{
-		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		TemplateModule: pallet_template::{Pallet, Call, Storage, Event<T>},
+		System: frame_system,
+		ClubPalletTesting: pallet_club::{Pallet, Call, Storage, Event<T>}
 	}
 );
+
 
 impl system::Config for Test {
 	type BaseCallFilter = frame_support::traits::Everything;
@@ -49,32 +50,14 @@ impl system::Config for Test {
 	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
 
-parameter_types! {
-	pub const BlockHashCount: BlockNumber = 2400;
-	pub const Version: RuntimeVersion = VERSION;
-	/// We allow for 2 seconds of compute with a 6 second average block time.
-	pub BlockWeights: frame_system::limits::BlockWeights = frame_system::limits::BlockWeights
-		::with_sensible_defaults(2 * WEIGHT_PER_SECOND, NORMAL_DISPATCH_RATIO);
-	pub BlockLength: frame_system::limits::BlockLength = frame_system::limits::BlockLength
-		::max_with_normal_ratio(5 * 1024 * 1024, NORMAL_DISPATCH_RATIO);
-	pub const SS58Prefix: u8 = 42;
-
-	pub const DepositPerItem: Balance = deposit(1, 0);
-	pub const DepositPerByte: Balance = deposit(0, 1);
-	pub const DeletionQueueDepth: u32 = 128;
-	pub DeletionWeightLimit: Weight = AVERAGE_ON_INITIALIZE_RATIO * BlockWeights::get().max_block;
-	pub Schedule: pallet_contracts::Schedule<Runtime> = Default::default();
-
-	pub const  MAX: u32 = 6;
+frame_support::parameter_types! {
+	pub const MaxValue: u32 = 6;
 
 }
 
-
-
-impl pallet_template::Config for Test {
+impl pallet_club::Config for Test {
 	type Event = Event;
-	type MAX = MAX;
-
+	type MaxValue = MaxValue;
 }
 
 // Build genesis storage according to the mock runtime.

@@ -163,7 +163,7 @@ parameter_types! {
 	pub DeletionWeightLimit: Weight = AVERAGE_ON_INITIALIZE_RATIO * BlockWeights::get().max_block;
 	pub Schedule: pallet_contracts::Schedule<Runtime> = Default::default();
 
-	pub const  MAX: u32 = 6;
+	pub const  MaxValue: u32 = 6;
 
 }
 
@@ -289,7 +289,7 @@ impl pallet_sudo::Config for Runtime {
 /// Configure the pallet_club in pallets/pallet_club.
 impl pallet_club::Config for Runtime {
 	type Event = Event;
-	type MAX = MAX;
+	type MaxValue = MaxValue;
 }
 
 impl pallet_nicks::Config for Runtime {

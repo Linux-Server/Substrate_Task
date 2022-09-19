@@ -3,6 +3,16 @@
 
 pub use pallet::*;
 
+#[cfg(test)]
+mod mock;
+
+#[cfg(test)]
+mod tests;
+
+#[cfg(feature = "runtime-benchmarks")]
+mod benchmarking;
+
+
 #[frame_support::pallet]
 pub mod pallet {
 	use frame_support::storage::bounded_vec::BoundedVec;
@@ -18,7 +28,8 @@ pub mod pallet {
 	pub trait Config: frame_system::Config {
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
 		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
-		type MAX: Get<u32>;
+		#[pallet::constant]
+		type MaxValue: Get<u32>;
 	}
 
 	#[pallet::pallet]
@@ -28,11 +39,11 @@ pub mod pallet {
 	#[pallet::storage]
 	// #[pallet::getter(fn get_RootClubMembers)]
 	pub type RootClubMembers<T: Config> =
-		StorageValue<_, BoundedVec<RootClubForm<T>, T::MAX>, ValueQuery>;
+		StorageValue<_, BoundedVec<RootClubForm<T>, T::MaxValue>, ValueQuery>;
 
 	#[pallet::storage]
 	#[pallet::getter(fn get_request_list)]
-	pub type MembershipRequestList<T: Config> = StorageValue<_, BoundedVec<T::AccountId, T::MAX>, ValueQuery>;
+	pub type MembershipRequestList<T: Config> = StorageValue<_, BoundedVec<T::AccountId, T::MaxValue>, ValueQuery>;
 
 	#[derive(Encode, Decode, PartialEq, MaxEncodedLen, TypeInfo)]
 	#[scale_info(skip_type_params(T))]
@@ -77,7 +88,7 @@ pub mod pallet {
 		*/ 
 
 
-		#[pallet::weight(10000)]
+		#[pallet::weight(10_000 + T::DbWeight::get().writes(1))]
 		pub fn request_to_join_club(origin: OriginFor<T>) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			// let who = T::Lookup::lookup(wait_member)?;
@@ -162,6 +173,9 @@ pub mod pallet {
 
 	
 	}
+
+
+
 }
 
 
